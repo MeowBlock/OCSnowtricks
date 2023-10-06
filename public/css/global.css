@@ -1,0 +1,29 @@
+body {
+    min-height: 100vh;
+    color: white;
+}
+.form_supercontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+}
+.form_container {
+    display: flex;
+    flex-direction: column;
+}
+.form_container form {
+    display: flex;
+    column-gap: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+.form_container form label{
+    margin-right: 20px;
+}
+a.navbar-item.is-active {
+    color: #bfbfbf;
+}
+a.navbar-item.is-active:hover {
+    color: #485fc7;
+}

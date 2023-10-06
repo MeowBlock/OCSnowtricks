@@ -10,16 +10,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-#[Route('/trick')]
+#[Route('/tricks')]
 class TrickController extends AbstractController
 {
-    #[Route('/', name: 'app_trick_index', methods: ['GET'])]
-    public function index(TrickRepository $trickRepository): Response
-    {
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
-        ]);
-    }
+    // #[Route('/', name: 'app_trick_index', methods: ['GET'])]
+    // public function index(TrickRepository $trickRepository): Response
+    // {
+    //     $card = [
+    //         'user'=>[
+    //             'title'=>'track',
+    //             'avatar' => 'https://placehold.co/60x60'
+    //         ],
+    //         'content' => 'blabla bonjour',
+    //         'image' => 'https://placehold.co/600x400'
+    //     ];
+    //     return $this->render('home/index.html.twig', [
+    //         'controller_name' => 'HomeController',
+    //         'card' => $card,
+    //     ]);
+    //     // return $this->render('trick/index.html.twig', [
+    //     //     'tricks' => $trickRepository->findAll(),
+    //     // ]);
+    // }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

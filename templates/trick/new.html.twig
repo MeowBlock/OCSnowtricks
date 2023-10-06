@@ -2,10 +2,14 @@
 
 {% block title %}New Trick{% endblock %}
 
+{% block stylesheets %} {{ parent() }} {% endblock %}
+
 {% block body %}
-    <h1>Create new Trick</h1>
-
-    {{ include('trick/_form.html.twig') }}
-
-    <a href="{{ path('app_trick_index') }}">back to list</a>
+    <div class="form_supercontainer">
+        <h1>Create new Trick</h1>
+        <div class="form_container">
+            {{ include('trick/_form.html.twig') }}
+        </div>
+        <a href="{{ path('app_trick_index') }}">back to list</a>
+    </div>
 {% endblock %}
