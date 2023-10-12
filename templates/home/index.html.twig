@@ -1,17 +1,17 @@
 {% extends "base.html.twig" %}
 
   {% block title %}
-    Cards List - Bulma Templates
+    Snowtricks - tricks
   {% endblock %}
 
   {% block stylesheets %}
-  {{parent()}}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset("/css/home.css") }}">
   {% endblock %}
   {% block javascripts %}
     <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
     <script src="{{ asset("/js/home.js") }}"></script>
-
   {% endblock %}
     {% block body %}
     <div class="container">
