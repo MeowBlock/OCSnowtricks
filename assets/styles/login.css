@@ -4,15 +4,19 @@
     --shadowLight: #EFF5FE;
   }
   
-  body {
+  .login {
     background: var(--background);
   }
-  
+
+  .is-fullheight {
+    min-height: 0px!important;
+  }
   .hero-body {
     justify-content: center;
   }
   
   .login {
+    min-width: min(400px, 80%);
     border-radius: 25px;
     padding: 1.5rem;
     box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
@@ -24,4 +28,12 @@
   
   a {
     font-weight: 600;
+  }
+  .form_connexion_logo {
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
   }

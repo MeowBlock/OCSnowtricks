@@ -6,21 +6,18 @@
 
   {% block stylesheets %}
     {{parent()}}
-    <link rel="stylesheet" href="{{ asset("/css/home.css") }}">
   {% endblock %}
   {% block javascripts %}
-    <script src="https://kit.fontawesome.com/7dc3015a44.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
-    <script src="{{ asset("/js/home.js") }}"></script>
+    {{ encore_entry_link_tags('home') }}
   {% endblock %}
     {% block body %}
+    <div class="home_head">
+      <div class="column has-text-centered">
+        <h1 class="title" style="color: var(--dark);">Snowtricks - Accueil</h1><br>
+      </div>
+    </div>
     <div class="container">
       <div class="section">
-        <div class="columns">
-          <div class="column has-text-centered">
-            <h1 class="title" style="color: ghostwhite;">Bulma Card Layout Template</h1><br>
-          </div>
-        </div>
         <div id="app" class="row columns is-multiline">
           {% for trick in tricks %}
             <div v-for="card in cardData" key="card.id" class="column is-4">

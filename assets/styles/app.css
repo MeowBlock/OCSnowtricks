@@ -1,0 +1,55 @@
+:root {
+    --bg: #071e36;
+    --card-bg: #041221;
+    --dark: #363636;
+  }
+
+body {
+    min-height: 100vh;
+    color: var(--dark);
+    background-color: var(--bg);
+}
+
+.navbar {
+    background: var(--card-bg)!important;
+  }
+  
+  .navbar-item {
+    color: ghostwhite!important;
+    text-decoration: none;
+  }
+  .navbar-item:hover {
+    color: #485fc7!important;
+  }
+
+.form_supercontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+}
+.form_container {
+    display: flex;
+    flex-direction: column;
+}
+.form_container form {
+    display: flex;
+    column-gap: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+.form_container form label{
+    margin-right: 20px;
+}
+a.navbar-item.is-active {
+    color: #bfbfbf;
+}
+a.navbar-item.is-active:hover {
+    color: #485fc7;
+}
+
+.error_msg {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(211, 39, 39);
+}

@@ -2,10 +2,6 @@
 ::-webkit-scrollbar-track{background:#efefef;border-radius:6px}
 ::-webkit-scrollbar-thumb{background:#d5d5d5;border-radius:6px}
 ::-webkit-scrollbar-thumb:hover{background:#c4c4c4}
-:root {
-    --bg: #071e36;
-    --card-bg: #041221;
-  }
   
   body {
     background: var(--bg);
@@ -20,14 +16,7 @@
   input::placeholder {
     color: antiquewhite;
   }
-  
-  .navbar {
-    background: var(--card-bg);
-  }
-  
-  .navbar-item {
-    color: ghostwhite;
-  }
+
   
   /* Card start*/
   .card {
@@ -61,4 +50,12 @@
   .fa {
     color: ghostwhite;
     margin: 10px
+  }
+  
+  .home_head {
+    padding: 50px 0 20px 0;
+    min-height: 400px;
+    background-image: url(https://placehold.co/1920x400);
+    background-size: cover;
+    background-position: center;
   }
