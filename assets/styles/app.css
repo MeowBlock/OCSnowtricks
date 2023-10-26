@@ -2,12 +2,17 @@
     --bg: #071e36;
     --card-bg: #041221;
     --dark: #363636;
+    --blue: #485fc7
   }
 
 body {
     min-height: 100vh;
-    color: var(--dark);
+    color: white;
     background-color: var(--bg);
+}
+
+.btn {
+  color: white!important;
 }
 
 .navbar {
@@ -19,7 +24,7 @@ body {
     text-decoration: none;
   }
   .navbar-item:hover {
-    color: #485fc7!important;
+    color: var(--blue)!important;
   }
 
 .form_supercontainer {

@@ -2,25 +2,50 @@
 
 {% block title %}Trick{% endblock %}
 
-{% block body %}
-    <h1>Trick</h1>
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ trick.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ trick.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block javascripts %}
+    {{parent()}}
+    {{ encore_entry_link_tags('trick_show') }}
+{% endblock %}
+
+{% block body %}
+
+<div style="background-image:url(https://placehold.co/1920x400)" class="banner_img title">
+    {{ trick.name}} <div class="banner_buttons">    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
+        {{ include('trick/_delete_form.html.twig') }}</div></div>
+<div class="carrousel_trick">
+    {% if trick.photos.count %}
+        {% for photo in trick.photos %}
+        <div class="trick_photo">{{photo}}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class='trick_description'> {{trick.content}} </div>
+
+<div class="tag_container">
+    <div class="tag"><!-- trick.createdAt -->25/10/2023</div>
+    <div class="tag"><!-- trick.lastModified -->26/10/2023</div>
+    <div class="tag"><!-- trick.group -->Groupe</div>
+</div>
+
+    <div class="div_separator"></div>
+    <div class="add_comment_container">
+        {{ 'include(comment/add.html.twig)' }}
+
+    </div>
+    <div class="div_separator"></div>
+
+    <div class="comment_list_container">
+        {% for comment in trick.comments %}
+            <div class="comment">{{ comment }}</div>
+        {% endfor %}
+    </div>
+
+    
 
     <a href="{{ path('app_trick_index') }}">back to list</a>
-
-    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
-
-    {{ include('trick/_delete_form.html.twig') }}
 {% endblock %}
