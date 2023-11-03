@@ -1,4 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="field">
+    <div class="control">
+        {{ form_widget(form.email) }}
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+        {{ form_widget(form.password) }}
+    </div>
+  </div>
+  <br>
+  <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
+    {{ button_label|default('S\'enregistrer') }}</button>
 {{ form_end(form) }}

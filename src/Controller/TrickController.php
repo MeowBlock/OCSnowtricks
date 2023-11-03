@@ -41,6 +41,14 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $trick->setCreatedAt(new \DateTimeImmutable());
+
+
+
+
+
+
             $entityManager->persist($trick);
             $entityManager->flush();
 
