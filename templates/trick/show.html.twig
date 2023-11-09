@@ -34,14 +34,34 @@
 
     <div class="div_separator"></div>
     <div class="add_comment_container">
-        {{ 'include(comment/add.html.twig)' }}
-
+        {{ form_start(commentform, {'action': path('app_comment_new'), 'method': 'POST'}) }}
+        <div class="field">
+            <div class="flex flex-center" style="column-gap:20px;">
+                <label>Poster un commentaire : </label>
+                <div class="control">
+                    {{ form_widget(commentform.content) }}
+                </div>
+            </div>
+          </div>
+          <input type='hidden' name="trick" value='{{ trick.id }}'>
+          <br>
+          <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
+            {{ button_label|default('Poster le commentaire') }}</button>
+        {{ form_end(commentform) }}    
     </div>
     <div class="div_separator"></div>
 
     <div class="comment_list_container">
         {% for comment in trick.comments %}
-            <div class="comment">{{ comment }}</div>
+            <div class="comment flex">
+                <div class="comment_author">
+                    {{ comment.author.email }}
+                    <img src="https://placehold.co/60x60">
+                </div>
+                <div>
+                    {{ comment.content }}
+                </div>
+                </div>
         {% endfor %}
     </div>
 

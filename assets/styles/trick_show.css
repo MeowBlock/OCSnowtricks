@@ -57,3 +57,32 @@
     border-bottom: 1px solid white;
     border-radius: 50px;
 }
+
+.add_comment_container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.comment {
+    width: 70%;
+    margin: auto;
+    align-items: center;
+    column-gap: 60px;
+    display: flex;
+
+    background-color: #727272;
+
+}
+
+.comment_author {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+}
+
+.comment_list_container {
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+}

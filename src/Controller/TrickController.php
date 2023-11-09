@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Trick;
+use App\Entity\Comment;
 use App\Form\TrickType;
+use App\Form\CommentType;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/tricks')]
 class TrickController extends AbstractController
 {
@@ -55,6 +57,8 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
+
+
         return $this->renderForm('trick/new.html.twig', [
             'trick' => $trick,
             'form' => $form,
@@ -65,8 +69,12 @@ class TrickController extends AbstractController
     public function show(Trick $trick): Response
     {
 
+        $commentform = $this->createForm(CommentType::class);
+        $commentform = $commentform->createView();
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'commentform' => $commentform,
+
         ]);
     }
 
@@ -81,7 +89,6 @@ class TrickController extends AbstractController
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,

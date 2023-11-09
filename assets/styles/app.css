@@ -58,3 +58,12 @@ a.navbar-item.is-active:hover {
   font-weight: bold;
   color: rgb(211, 39, 39);
 }
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
