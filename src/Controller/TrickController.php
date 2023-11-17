@@ -2,16 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Photo;
 use App\Entity\Trick;
+use App\Entity\Video;
 use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\CommentType;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/tricks')]
 class TrickController extends AbstractController
 {
@@ -43,16 +48,63 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $trick->setCreatedAt(new \DateTimeImmutable());
 
+            // $videolinks = $form->get('videos')->getData();
+            // if ($videolinks) {
+            //     foreach($videolinks as $video) {
+            //         $vid = new Video();
+            //         $vid->setUrl($video);
+            //         $vid->setTrick($trick);
+            //         $entityManager->persist($vid);
 
-
-
+            //         $trick->addVideo($vid);
+            //     }
+            // }
 
 
             $entityManager->persist($trick);
+
             $entityManager->flush();
+
+
+
+            $photosFiles = $form->get('photos')->getData();
+
+            if ($photosFiles) {
+                $filesystem = new Filesystem();
+                $dir = $_SERVER['DOCUMENT_ROOT'].'/img/trick/'.$trick->getId();
+                try {
+                    $filesystem->mkdir(
+                        $dir, 0700
+                    );
+                } catch (IOExceptionInterface $exception) {
+                    echo "An error occurred while creating your directory at ".$exception->getPath();
+                }
+
+
+                foreach ($photosFiles as $photo) { 
+                    $filename = uniqid().'.'.$photo->guessExtension();
+                    try {
+                        $photo->move(
+                            $dir,
+                            $filename
+                        );
+
+
+                        $img = new Photo();
+                        $img->setUrl($filename);
+                        $img->setTrick($trick);
+
+                        $entityManager->persist($img);
+
+                        $trick->addPhoto($img);
+                    } catch (FileException $e) {
+                        echo 'Erreur dans l\'envoi de l\'image';
+                    }
+                }
+                $entityManager->flush();
+            }
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }

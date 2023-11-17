@@ -1,4 +1,42 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.content) }}
+{{ form_row(form.photos) }}
+<label> Videos : </label>
+<ul class="videos"
+    data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}"
+    data-prototype="{{ form_widget(form.videos.vars.prototype.url)|e('html_attr') }}"
+    ></ul>
+    <button type="button" class="add_item_link" data-collection-holder-class="videos">Ajouter une vidéo (url)</button>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+
+<script>
+
+    const addFormToCollection = (e) => {
+        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+      
+        const item = document.createElement('li');
+      
+        item.innerHTML = collectionHolder
+          .dataset
+          .prototype
+          .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+          );
+      
+        collectionHolder.appendChild(item);
+      
+        collectionHolder.dataset.index++;
+      };
+
+    document
+  .querySelectorAll('.add_item_link')
+  .forEach(btn => {
+      btn.addEventListener("click", addFormToCollection)
+  });
+
+
+</script>

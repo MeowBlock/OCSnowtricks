@@ -32,6 +32,7 @@ class Video
 
     public function setUrl(string $url): static
     {
+        //setter embed
         $this->url = $url;
 
         return $this;

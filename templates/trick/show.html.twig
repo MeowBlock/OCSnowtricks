@@ -4,11 +4,13 @@
 
 {% block stylesheets %}
     {{parent()}}
+    {{ encore_entry_link_tags('trick_show') }}
+
 {% endblock %}
 
 {% block javascripts %}
     {{parent()}}
-    {{ encore_entry_link_tags('trick_show') }}
+    {{ encore_entry_script_tags('trick_show') }}
 {% endblock %}
 
 {% block body %}
@@ -17,17 +19,28 @@
     {{ trick.name}} <div class="banner_buttons">    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
         {{ include('trick/_delete_form.html.twig') }}</div></div>
 <div class="carrousel_trick">
+    <div id="dark-overlay"></div>
     {% if trick.photos.count %}
         {% for photo in trick.photos %}
-        <div class="trick_photo">{{photo}}</div>
+        <div class="trick_photo">
+            <img src="{{ asset('img/trick/' ~ trick.id ~ '/' ~ photo.url) }}">
+            <div class="hover-overlay">+</div>
+        </div>
         {% endfor %}
     {% endif %}
+    {% if trick.videos.count %}
+    {% for video in trick.videos %}
+    <div class="trick_photo">
+        <iframe width="100" height="100" src="{{video.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    {% endfor %}
+{% endif %}
 </div>
 
 <div class='trick_description'> {{trick.content}} </div>
 
 <div class="tag_container">
-    <div class="tag"><!-- trick.createdAt -->25/10/2023</div>
+    <div class="tag"><!-- trick.createdAt -->{{ trick.createdAt.format('d/m/Y') }}</div>
     <div class="tag"><!-- trick.lastModified -->26/10/2023</div>
     <div class="tag"><!-- trick.group -->Groupe</div>
 </div>
