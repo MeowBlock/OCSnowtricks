@@ -3,11 +3,15 @@
 {% block title %}Edit Trick{% endblock %}
 
 {% block body %}
-    <h1>Edit Trick</h1>
+    <div class="form_supercontainer">
+        <h1>Edit Trick</h1>
+        <div class="form_container">
+            {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+        {{ include('trick/_delete_form.html.twig') }}
 
-    {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+        <a class="backto" href="{{ path('app_trick_show', {'id':trick.id}) }}">retour au trick</a>
 
-    <a href="{{ path('app_trick_index') }}">back to list</a>
+    </div>
 
-    {{ include('trick/_delete_form.html.twig') }}
 {% endblock %}

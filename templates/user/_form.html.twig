@@ -1,7 +1,19 @@
 {{ form_start(form) }}
+{{ form_errors(form) }}
 <div class="field">
     <div class="control">
+
         {{ form_widget(form.email) }}
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+        {{ form_widget(form.name) }}
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+        {{ form_widget(form.avatar) }}
     </div>
   </div>
   <div class="field">

@@ -21,6 +21,8 @@ class HomeController extends AbstractController
             'content' => 'blabla bonjour',
             'image' => 'https://placehold.co/600x400'
         ];
+
+
         // return $this->render('trick/index.html.twig', [
         // 'tricks' => $trickRepository->findAll(),
         // ]);

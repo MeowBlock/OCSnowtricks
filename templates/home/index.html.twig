@@ -11,7 +11,8 @@
     {{ encore_entry_link_tags('home') }}
   {% endblock %}
     {% block body %}
-    <div class="home_head">
+    <div class="home_head" style="background-image: url({{ asset('img/banner.jpg') }});">
+      <div class="home_overlay"></div>
       <div class="column has-text-centered">
         <h1 class="title" style="color: var(--dark);">Snowtricks - Accueil</h1><br>
       </div>
@@ -25,7 +26,11 @@
                 <div class="card large">
                   <div class="card-image">
                     <figure class="image is-16by9">
-                      <img src="{{ card.image }}" alt="Image">
+                      {% if trick.photos|first %}
+                        <img src="{{ asset('img/trick/' ~ trick.id ~ '/' ~ trick.photos[0].url) }}" alt="Image">
+                      {% else %}
+                        <img src="https://placehold.co/600x400" alt="Image">
+                      {% endif %}
                     </figure>
                   </div>
                   <div class="card-content">

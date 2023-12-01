@@ -33,7 +33,8 @@ class Video
     public function setUrl(string $url): static
     {
         //setter embed
-        $this->url = $url;
+
+        $this->url = preg_replace(['/watch\?v\=/', '/youtu\.be/', '/\&list.*/', '/\?list.*/'], ['embed/', 'www.youtube.com/embed', '', ''], $url); 
 
         return $this;
     }

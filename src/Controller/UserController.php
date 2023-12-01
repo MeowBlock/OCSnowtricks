@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Photo;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/user')]
@@ -39,8 +43,40 @@ class UserController extends AbstractController
                 $plaintextPassword
             );
             $user->setPassword($hashedPassword);
+            $user->setAvatar('default_avatar.png');
             $entityManager->persist($user);
             $entityManager->flush();
+
+
+
+
+            $photo = $form->get('avatar')->getData();
+
+            if ($photo) {
+                $filesystem = new Filesystem();
+                $dir = $_SERVER['DOCUMENT_ROOT'].'/img/user/'.$user->getId();
+                try {
+                    $filesystem->mkdir(
+                        $dir, 0700
+                    );
+                } catch (IOExceptionInterface $exception) {
+                    echo "An error occurred while creating your directory at ".$exception->getPath();
+                }
+
+
+                $filename = uniqid().'.'.$photo->guessExtension();
+                try {
+                    $photo->move(
+                        $dir,
+                        $filename
+                    );
+                    $user->setAvatar($filename);
+                    $entityManager->persist($user);
+                } catch (FileException $e) {
+                    echo 'Erreur dans l\'envoi de l\'image';
+                }
+            $entityManager->flush();
+            }
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }

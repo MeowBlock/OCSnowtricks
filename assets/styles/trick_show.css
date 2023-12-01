@@ -121,6 +121,10 @@
     cursor: pointer;
 }
 
+.photo-overlay .hover-overlay {
+    display: none;
+}
+
 .photo-overlay {
     max-height: 100vh;
     max-width: 100vw;
@@ -141,4 +145,19 @@
     top: 0;
     left: 0;
 
+}
+
+.video_overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.photo-overlay .video_overlay {
+    pointer-events: none;
+}
+
+.photo-overlay iframe {
+    width: 100%;
+    height: 100%;
 }
