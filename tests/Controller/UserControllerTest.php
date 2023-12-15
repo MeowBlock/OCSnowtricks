@@ -46,8 +46,7 @@ class UserControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'user[email]' => 'Testing',
-            'user[roles]' => 'Testing',
+            'user[email]' => 'testig@wawa.com',
             'user[password]' => 'Testing',
         ]);
 
@@ -61,7 +60,6 @@ class UserControllerTest extends WebTestCase
         $this->markTestIncomplete();
         $fixture = new User();
         $fixture->setEmail('My Title');
-        $fixture->setRoles('My Title');
         $fixture->setPassword('My Title');
 
         $this->manager->persist($fixture);

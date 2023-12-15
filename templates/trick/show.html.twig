@@ -15,7 +15,7 @@
 
 {% block body %}
 
-<div style="background-image:url({{ asset('img/trick/' ~ trick.id ~ '/' ~ trick.photos[0].url) }})" class="banner_img title">
+<div style="background-image:url({{ asset('img/' ~ trick.getFirstPhoto ) }})" class="banner_img title">
     {{ trick.name}} <div class="banner_buttons">    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">edit</a>
         {{ include('trick/_delete_form.html.twig') }}</div></div>
 <div class="carrousel_trick">
@@ -73,7 +73,7 @@
                 <div class="comment_author">
                     {{ comment.author.name }}
                     {% if comment.author.avatar %}
-                        <img width="60" height="60" src='{{asset('img/user/' ~ comment.author.id ~ '/' ~ comment.author.avatar)}}'></img>
+                        <img width="60" height="60" src='{{asset('img/' ~ comment.author.avatar)}}'></img>
                     {% else %}
                     <img width="60" height="60" src='{{asset('img/default_avatar.png')}}'></img>
 

@@ -22,7 +22,7 @@
         <div id="app" class="row columns is-multiline">
           {% for trick in tricks %}
             <div v-for="card in cardData" key="card.id" class="column is-4">
-              <a href="{{ path('app_trick_show', {id: trick.id}) }}">
+              <a style="text-decoration:none;" href="{{ path('app_trick_show', {id: trick.id}) }}">
                 <div class="card large">
                   <div class="card-image">
                     <figure class="image is-16by9">
@@ -35,18 +35,17 @@
                   </div>
                   <div class="card-content">
                     <div class="media">
-                      <div class="media-left">
-                        <figure class="image is-48x48">
-                          <img src="{{ card.user.avatar }}" alt="Image">
-                        </figure>
-                      </div>
                       <div class="media-content">
                         <p class="title is-4 no-padding">{{trick.name}}</p>
                       </div>
                     </div>
                     <div class="content">
-                      {{trick.content}}
-                      <div class="background-icon"><span class="icon-twitter"></span></div>
+                      <p>
+                      {{trick.content[0:100]}}
+                      {% if trick.content|length > 100 %}
+                        {{ '...' }}
+                      {% endif %}
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -1,8 +1,7 @@
 {{ form_start(form) }}
-{{ form_errors(form) }}
 <div class="field">
     <div class="control">
-
+        {{ form_errors(form.email) }}
         {{ form_widget(form.email) }}
     </div>
   </div>

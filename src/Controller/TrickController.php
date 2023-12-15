@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DataFixtures\TrickFixture;
 use App\Entity\Photo;
 use App\Entity\Trick;
 use App\Entity\Video;

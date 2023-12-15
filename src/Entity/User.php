@@ -187,7 +187,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatar(): ?string
     {
-        return $this->avatar;
+        if($this->avatar == 'default_avatar.png') {
+            return $this->avatar;
+        } else {
+            return 'user/' . $this->id . '/' . $this->avatar;
+        }
     }
 
     public function setAvatar(?string $avatar): static
