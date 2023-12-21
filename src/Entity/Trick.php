@@ -189,7 +189,7 @@ class Trick
 
     public function getFirstPhoto() {
         if(isset($this->photos[0])) {
-            return 'trick/' . $this->id . '/' . $this->photos[0]->url;
+            return 'trick/' . $this->id . '/' . $this->photos[0]->getUrl();
         } else {
             return 'banner.jpg';
         }
