@@ -81,9 +81,9 @@ let cardsData = [{
   },
   ]
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    cardData: cardsData
-  }
-})
+// var app = new Vue({
+//   el: '#app',
+//   data: {
+//     cardData: cardsData
+//   }
+// })
