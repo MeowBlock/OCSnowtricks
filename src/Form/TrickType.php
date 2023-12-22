@@ -20,6 +20,7 @@ class TrickType extends AbstractType
             ->add('content', TextareaType::class, array('label' => 'Description : '))
             ->add('photos', FileType::class, array('label' => 'Images : ', 'multiple' => true, 'mapped'=> false))
             ->add('videos', CollectionType::class, array('entry_type' => VideoType::class, 'label' => false,'allow_add' => true,'allow_delete' => true, 'by_reference' => false,))
+            ->add('groupe', TextType::class, array('label' => 'Groupe : ', 'mapped'=> false))
         ;
     }
 

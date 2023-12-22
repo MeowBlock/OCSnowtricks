@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\DataFixtures\TrickFixture;
 use App\Entity\Photo;
 use App\Entity\Trick;
 use App\Entity\Video;
+use App\Entity\Groupe;
 use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\CommentType;
+use App\DataFixtures\TrickFixture;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -71,6 +72,23 @@ class TrickController extends AbstractController
 
 
             $photosFiles = $form->get('photos')->getData();
+            $groupe = $form->get('groupe')->getData();
+
+            if($groupe) {
+                $groupe = strtolower($groupe);
+                $groupeRepository = $entityManager->getRepository(Groupe::class);
+                $group = $groupeRepository->findBy(['name' => $groupe]);
+
+                if($group) {
+                    $trick->setGroupe($group[0]);
+                } else {
+                    $group = new Groupe();
+                    $group->setName($groupe);
+                    $entityManager->persist($group);
+
+                    $trick->setGroupe($group);
+                }
+            }
 
             if ($photosFiles) {
                 $filesystem = new Filesystem();

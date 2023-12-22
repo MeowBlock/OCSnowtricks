@@ -37,6 +37,9 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    private ?Groupe $groupe = null;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
@@ -193,5 +196,17 @@ class Trick
         } else {
             return 'banner.jpg';
         }
+    }
+
+    public function getGroupe(): ?Groupe
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Groupe $groupe): static
+    {
+        $this->groupe = $groupe;
+
+        return $this;
     }
 }
