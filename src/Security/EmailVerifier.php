@@ -2,9 +2,6 @@
 
 namespace App\Security;
 
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mailer\Mailer;
-use Symfony\Component\Mailer\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,28 +34,7 @@ class EmailVerifier
 
         $email->context($context);
 
-        $transport = Transport::fromDsn('smtp://bc15b916566818:5ad246492f91b6@sandbox.smtp.mailtrap.io:2525');
-        // Create a Mailer object 
-        $mailer = new Mailer($transport); 
-        // Create an Email object 
-        $email = (new Email());
-        // Set the "From address" 
-        $email->from('site@meowblock.net');
-        // Set the "From address" 
-        $email->to($user->getEmail());
-        // Set a "subject" 
-        $email->subject('Demande de contact depuis le site Snowtricks');
-        // Set HTML "Body" 
-        $html = '<p>
-        Please confirm your email address by clicking the following link: <br><br>
-        <a href="'. $context['signedUrl'].'">Confirm my Email</a>.
-        This link will expire in 15 minutes.
-    </p>';
 
-        $email->html($html);
-        // Send the message 
-        $mailer->send($email);
-        
         $this->mailer->send($email);
     }
 

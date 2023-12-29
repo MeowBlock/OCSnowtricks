@@ -19,29 +19,24 @@
             {% endif %}
             <div class="form_connexion_logo">
               <img src="{{ asset('img/logo.png') }}" height="60" width="60" alt="Logo">
-              Connexion
+              Mot de passe oublié
             </div>
-            <form action="{{ path('app_login') }}" method="post">
+            <form action="{{ path('app_forgot') }}" method="post">
             <div class="field">
               <div class="control">
-                <input class="input is-medium is-rounded" type="email" placeholder="hello@example.com" autocomplete="username" name="_username" required />
-              </div>
-            </div>
-            <div class="field">
-              <div class="control">
-                <input class="input is-medium is-rounded" type="password" placeholder="**********" autocomplete="current-password" name="_password" required />
+                <input class="input is-medium is-rounded" type="email" placeholder="hello@example.com" autocomplete="email" name="email" required />
               </div>
             </div>
             <br />
             <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
-              Connexion
+              Demander un nouveau mot de passe
             </button>
           </form>
           <br>
           <nav class="level">
             <div class="level-item has-text-centered">
               <div>
-                <a href="{{path('app_forgot')}}">Mot de passe oublié</a>
+                <a href="{{path('app_login')}}">Se connecter</a>
               </div>
             </div>
             <div class="level-item has-text-centered">

@@ -97,7 +97,7 @@ class UserController extends AbstractController
             $entityManager->flush();
             }
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/new.html.twig', [
@@ -136,20 +136,67 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $plaintextPassword = $user->getPassword();
+    
+                // hash the password (based on the security.yaml config for the $user class)
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $plaintextPassword
+                );
+                $user->setPassword($hashedPassword);
+                $user->setAvatar('default_avatar.png');
+                $entityManager->persist($user);
+                $entityManager->flush();
+    
+    
+                $photo = $form->get('avatar')->getData();
+    
+                if ($photo) {
+                    $filesystem = new Filesystem();
+                    $dir = $_SERVER['DOCUMENT_ROOT'].'/img/user/'.$user->getId();
+                    try {
+                        $filesystem->mkdir(
+                            $dir, 0700
+                        );
+                    } catch (IOExceptionInterface $exception) {
+                        echo "An error occurred while creating your directory at ".$exception->getPath();
+                    }
+    
+    
+                    $filename = uniqid().'.'.$photo->guessExtension();
+                    try {
+                        $photo->move(
+                            $dir,
+                            $filename
+                        );
+                        $user->setAvatar($filename);
+                        $entityManager->persist($user);
+                    } catch (FileException $e) {
+                        echo 'Erreur dans l\'envoi de l\'image';
+                    }
+                $entityManager->flush();
+                }
+            }
+
+
+
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
+            'button_label' => 'Modifier',
         ]);
     }
 

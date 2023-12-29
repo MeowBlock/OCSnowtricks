@@ -37,6 +37,12 @@
                         {% endif %}
                         <li><a href="{{path('app_trick_index')}}">Liste</a></li>
                     </ul>
+                    <p class="menu-label">
+                        Utilisateur
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{{path('app_user_edit', {'id' : user.id})}}">Editer les informations de mon compte</a></li>
+                    </ul>
                 </aside>
             </div>
             <div class="column is-9">
