@@ -1,4 +1,5 @@
 import './styles/home.css';
+import './js/home.js';
 
 
 console.log('it works!');

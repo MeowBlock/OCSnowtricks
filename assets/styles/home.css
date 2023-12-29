@@ -66,3 +66,14 @@
     position: absolute;
     top: 0;
   }
+
+  .upArrow {
+    position: fixed;
+    right: 60px;
+    bottom: 50px;
+  }
+  .upArrow img {
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+  }

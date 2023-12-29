@@ -197,6 +197,7 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form,
             'button_label' => 'Modifier',
+            'edit' => 'true'
         ]);
     }
 

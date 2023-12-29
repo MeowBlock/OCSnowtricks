@@ -19,4 +19,3 @@ photos.forEach(el => {
     });
 
 })
-

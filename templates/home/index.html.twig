@@ -6,9 +6,12 @@
 
   {% block stylesheets %}
     {{parent()}}
+    {{ encore_entry_link_tags('home') }}
   {% endblock %}
   {% block javascripts %}
-    {{ encore_entry_link_tags('home') }}
+    {{parent()}}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('home') }}
   {% endblock %}
     {% block body %}
     <div class="home_head" style="background-image: url({{ asset('img/banner.jpg') }});">
@@ -18,10 +21,11 @@
       </div>
     </div>
     <div class="container">
+      <div class="upArrow hidden"><img width="60" height="60" src="{{asset('img/up-arrow.png')}}"></div>
       <div class="section">
         <div id="app" class="row columns is-multiline">
           {% for trick in tricks %}
-            <div v-for="card in cardData" key="card.id" class="column is-4">
+            <div v-for="card in cardData" key="card.id" class="column is-4 sm-is-12">
               <a style="text-decoration:none;" href="{{ path('app_trick_show', {id: trick.id}) }}">
                 <div class="card large">
                   <div class="card-image">
@@ -35,8 +39,14 @@
                   </div>
                   <div class="card-content">
                     <div class="media">
-                      <div class="media-content">
-                        <p class="title is-4 no-padding">{{trick.name}}</p>
+                      <div class="media-content flex" style="justify-content:space-between;">
+                        <p class="title is-4 no-padding" style="word-break:normal;">{{trick.name}}</p>
+                        <div class="banner_buttons flex">
+                          {% if app.user %}
+                              <a style="width:60px;" href="{{ path('app_trick_edit', {'id': trick.id}) }}"><img width="30" height="30" src="{{asset('img/pen.png')}}"></a>
+                              {{ include('trick/_delete_form.html.twig') }}
+                          {% endif %}
+                        </div>
                       </div>
                     </div>
                     <div class="content">

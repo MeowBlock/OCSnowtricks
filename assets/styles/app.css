@@ -67,3 +67,28 @@ a.navbar-item.is-active:hover {
   justify-content: center;
   align-items: center;
 }
+
+.hidden {
+  display: none!important;
+}
+
+@media screen and (max-width:900px) {
+  .navbar-brand {
+    width: 100%;
+  }
+  .sm-is-12 {
+    width: 100%;
+  }
+  .navbar-menu {
+    box-shadow: 0 8px 16px rgba(10,10,10,.1);
+    padding: 0.5rem 0;
+    width: 100vw;
+    background-color: inherit;
+  }
+  a.navbar-item.is-active {
+    color: #bfbfbf;
+}
+a.navbar-item.is-active {
+    color: #485fc7!important;
+}
+}
