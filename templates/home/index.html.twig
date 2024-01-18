@@ -24,44 +24,7 @@
       <div class="upArrow hidden"><img width="60" height="60" src="{{asset('img/up-arrow.png')}}"></div>
       <div class="section">
         <div id="app" class="row columns is-multiline">
-          {% for trick in tricks %}
-            <div v-for="card in cardData" key="card.id" class="column is-4 sm-is-12">
-              <a style="text-decoration:none;" href="{{ path('app_trick_show', {id: trick.id}) }}">
-                <div class="card large">
-                  <div class="card-image">
-                    <figure class="image is-16by9">
-                      {% if trick.photos|first %}
-                        <img src="{{ asset('img/trick/' ~ trick.id ~ '/' ~ trick.photos[0].url) }}" alt="Image">
-                      {% else %}
-                        <img src="https://placehold.co/600x400" alt="Image">
-                      {% endif %}
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content flex" style="justify-content:space-between;">
-                        <p class="title is-4 no-padding" style="word-break:normal;">{{trick.name}}</p>
-                        <div class="banner_buttons flex">
-                          {% if app.user %}
-                              <a style="width:60px;" href="{{ path('app_trick_edit', {'id': trick.id}) }}"><img width="30" height="30" src="{{asset('img/pen.png')}}"></a>
-                              {{ include('trick/_delete_form.html.twig') }}
-                          {% endif %}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="content">
-                      <p>
-                      {{trick.content[0:100]}}
-                      {% if trick.content|length > 100 %}
-                        {{ '...' }}
-                      {% endif %}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          {% endfor %}
+          {{ include('home/_partial_tricklist.html.twig') }}
         </div>
       </div>
     </div>
