@@ -33,7 +33,9 @@
                         {% if user.isVerified %}
                         <li><a href="{{path('app_trick_new')}}">Nouveau</a></li>
                         {% else %}
-                        <li>Validez votre email pour créer un nouveau Trick</li>
+                        <li><a href="{{path('app_trick_new')}}">Nouveau</a></li>
+
+                        {# <li>Validez votre email pour créer un nouveau Trick</li> #}
                         {% endif %}
                         <li><a href="{{path('app_trick_index')}}">Liste</a></li>
                     </ul>

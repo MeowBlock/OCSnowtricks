@@ -1,6 +1,6 @@
 {{ form_start(form) }}
 <div class="field">
-  {% if edit is null %}
+  {% if edit is not defined %}
     <div class="control">
   {% else %}
     <div class="control hidden">
