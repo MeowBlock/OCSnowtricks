@@ -7,6 +7,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +40,10 @@ class LoginController extends AbstractController
     public function forgot_password(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
 
-        if(isset($_POST['email'])) {
+        $request = Request::createFromGlobals();
+        $userEmail = $request->request->get('email', '');
+
+        if($userEmail) {
 
             $transport = Transport::fromDsn('smtp://bc15b916566818:5ad246492f91b6@sandbox.smtp.mailtrap.io:2525');
             // Create a Mailer object 
@@ -49,7 +53,7 @@ class LoginController extends AbstractController
             // Set the "From address" 
             $email->from('site@meowblock.net');
             // Set the "From address" 
-            $email->to($_POST['email']);
+            $email->to($userEmail);
             // Set a "subject" 
             $email->subject('Nouveau mot de passe Snowtricks');
             // Set HTML "Body" 
@@ -64,7 +68,7 @@ class LoginController extends AbstractController
 
             $userRepository = $entityManager->getRepository(User::class);
 
-            $user = $userRepository->findOneBy(['email' => $_POST['email']]);
+            $user = $userRepository->findOneBy(['email' => $userEmail]);
 
             $hashedPassword = $this->hasher->hashPassword(
                 $user,
