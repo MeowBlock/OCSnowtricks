@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Photo;
 use App\Entity\Trick;
 use App\Entity\Groupe;
 use App\DataFixtures\GroupeFixture;
@@ -32,16 +33,40 @@ class TrickFixture extends Fixture implements DependentFixtureInterface
         $gRepo = $manager->getRepository(Groupe::class);
         $allGroups = $gRepo->findAll();
         $fc = new LoremIpsumGenerator();
-        for ($i = 0; $i < 20; $i++) {
+        $groupList = ['Les Basiques' => ['Ollie','Jibbing', 'Switch Riding', 'Shifty'], 'Figures butter' => ['Tail Roll','Butter', 'Nose Roll', 'Tripod'], 'Spins, Flips et Grabs' => ['Indy Grab','Alley-oop', 'Backside 360', 'Backflip'], 'Rail et Box' => ['Boardslide','Nose Bonk', 'Tail Press', 'Lipslide']];
+        $photoList = ['Les Basiques' => 'trickDefaultBasics.jpg', 'Figures butter' => 'trickDefaultButter.jpg', 'Spins, Flips et Grabs' => 'trickDefaultFlips.jpg', 'Rail et Box' => 'trickDefaultRail.jpg'];
 
-            $numba = random_int(0, count($allGroups) - 1);
+        $groupCount = count($groupList);
+        $tricksPerGroup = count($groupList[array_keys($groupList)[0]]);
+        for($i = 0; $i < $tricksPerGroup; $i++) {
+            //loop on each trick
 
-            $trick = new Trick();
-            $trick->setName('Trick '.$i);
-            $trick->setContent($fc->generateLorem());
-            $trick->setCreatedAt(new \DateTimeImmutable());
-            $trick->setGroupe($allGroups[$numba]);
-            $manager->persist($trick);
+
+
+            for($j = 0; $j < $groupCount; $j++) {
+                //loop one trick per group at a time
+
+                $trickName = $groupList[array_keys($groupList)[$j]][$i];
+                $groupe = array_keys($groupList)[$j];
+
+
+
+
+                $trick = new Trick();
+                $photo = new Photo();
+
+                $photo->setUrl('../../'.$photoList[$groupe]);
+                $photo->setTrick($trick);
+                $trick->addPhoto($photo);
+    
+                $trick->setGroupe($gRepo->findOneBy(['name' => $groupe]));
+                $trick->setName($trickName);
+                $trick->setContent($fc->generateLorem());
+                $trick->setCreatedAt(new \DateTimeImmutable());
+
+                $manager->persist($photo);
+                $manager->persist($trick);
+            }
         }
         $manager->flush();
     }
