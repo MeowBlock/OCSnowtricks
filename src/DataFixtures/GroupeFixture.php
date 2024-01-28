@@ -10,9 +10,10 @@ class GroupeFixture extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 5; $i++) {
+        $arr = ['Les Basiques', 'Figures butter', 'Spins, Flips et Grabs', 'Rail et Box'];
+        foreach ($arr as $el) {
             $groupe = new Groupe();
-            $groupe->setName('Group '.$i);
+            $groupe->setName($el);
             $manager->persist($groupe);
         }
         $manager->flush();
