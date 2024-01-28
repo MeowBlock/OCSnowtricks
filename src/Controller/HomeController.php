@@ -6,6 +6,7 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
 use App\Repository\TrickRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,12 +45,9 @@ class HomeController extends AbstractController
     #[Route('/api/getTricks', name: 'api_trick_index', methods: ['GET'])]
     public function getTricks(TrickRepository $trickRepository): Response
     {
+        $request = Request::createFromGlobals();
+        $page = $request->query->get('page', 1);
 
-        if(!isset($_GET['page']))  {
-            $page = 1;
-        } else {
-            $page = $_GET['page'];
-        }
         $tricks = $trickRepository->findBy([], ['createdAt'=> 'DESC'], $this->itemsPerPage * $page);
         $card = [
             'user'=>[
