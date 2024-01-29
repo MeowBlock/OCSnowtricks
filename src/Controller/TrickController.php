@@ -92,7 +92,7 @@ class TrickController extends AbstractController
 
             if ($photosFiles) {
                 $filesystem = new Filesystem();
-                $dir = $_SERVER['DOCUMENT_ROOT'].'/img/trick/'.$trick->getId();
+                $dir = __DIR__.'/../../public/img/trick/'.$trick->getId();
                 try {
                     $filesystem->mkdir(
                         $dir, 0700

@@ -73,7 +73,7 @@ class UserController extends AbstractController
 
             if ($photo) {
                 $filesystem = new Filesystem();
-                $dir = __DIR__.'/img/user/'.$user->getId();
+                $dir = __DIR__.'/../../public/img/user/'.$user->getId();
                 try {
                     $filesystem->mkdir(
                         $dir, 0700
@@ -160,7 +160,7 @@ class UserController extends AbstractController
     
                 if ($photo) {
                     $filesystem = new Filesystem();
-                    $dir = __DIR__.'/img/user/'.$user->getId();
+                    $dir = __DIR__.'/../../public/img/user/'.$user->getId();
                     try {
                         $filesystem->mkdir(
                             $dir, 0700
