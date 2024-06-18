@@ -1,5 +1,5 @@
 document.querySelector('.navbar-burger').addEventListener('click', function() {
-    navbar = document.querySelector('#navbarMenu');
+    var navbar = document.querySelector('#navbarMenu');
     if(navbar.style.display == 'none') {
         navbar.style.display = 'block';
     } else {
@@ -9,8 +9,7 @@ document.querySelector('.navbar-burger').addEventListener('click', function() {
 
 
 function paginate(clsName, itemsPerPage, page = 1) {
-    console.log('wowsers');
-    elements = document.querySelectorAll('.'+clsName);
+    var elements = document.querySelectorAll('.'+clsName);
     for( var i = 0; i < elements.length(); i++) {
         if( i < (page+1) * itemsPerPage && i > (page * itemsPerPage)) {
             elements[i].classList.remove('hidden');

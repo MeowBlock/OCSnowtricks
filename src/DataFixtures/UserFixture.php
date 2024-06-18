@@ -23,7 +23,7 @@ class UserFixture extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setName('User '.$i);
-            $user->setEmail('myEmail'.$i.'@website.cum');
+            $user->setEmail('myEmail'.$i.'@website.com');
             $user->setAvatar('default_avatar.png');
 
             $plaintextPassword = 'FnuyAssword'.$i;

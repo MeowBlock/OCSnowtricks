@@ -166,6 +166,7 @@ class UserController extends AbstractController
                             $dir, 0700
                         );
                     } catch (IOExceptionInterface $exception) {
+                        //THROW
                         echo "An error occurred while creating your directory at ".$exception->getPath();
                     }
     
