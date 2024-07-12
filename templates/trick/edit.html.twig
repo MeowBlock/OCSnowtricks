@@ -10,7 +10,7 @@
         </div>
         {{ include('trick/_delete_form.html.twig') }}
 
-        <a class="backto" href="{{ path('app_trick_show', {'id':trick.id}) }}">retour au trick</a>
+        <a class="backto" href="{{ path('app_trick_show', {'slug':trick.slug}) }}">retour au trick</a>
 
     </div>
 

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon mot de passe{% endblock %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+  {{parent()}}
+  {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+<section class="hero is-fullheight">
+    <div class="hero-body has-text-centered">
+        <div class="login">
+
+            <h1 class="form_connexion_logo">
+                <img src="{{ asset('img/logo.png') }}" height="60" width="60" alt="Logo">
+                Modifier mot de passe</h1>
+
+                {{ form_start(form) }}
+                <div class="field">
+                    <div class="control hidden">
+                        {{ form_errors(form.email) }}
+                        {{ form_row(form.email) }}
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control hidden">
+                        {{ form_row(form.name) }}
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control hidden">
+                        {{ form_row(form.avatar) }}
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control hidden">
+                        <input type="text", name="old_pw" value="{{ old_pw }}">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                        <label>Nouveau mot de passe</label>
+                        {{ form_widget(form.password.first) }}
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                        <label>Répetez le nouveau mot de passe</label>
+                        {{ form_widget(form.password.second) }}
+                    </div>
+                  </div>
+                  <br>
+                  <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
+                    {{ button_label|default('Valider') }}</button>
+                {{ form_end(form) }}
+                            
+        </div>
+
+    </div>
+
+
+</section>
+{% endblock %}

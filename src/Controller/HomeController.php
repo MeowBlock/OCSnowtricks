@@ -48,7 +48,7 @@ class HomeController extends AbstractController
         $request = Request::createFromGlobals();
         $page = $request->query->get('page', 1);
 
-        $tricks = $trickRepository->findBy([], ['createdAt'=> 'DESC'], $this->itemsPerPage * $page);
+        $tricks = $trickRepository->findBy([], ['createdAt'=> 'DESC'], $this->itemsPerPage * $page,  $this->itemsPerPage * ($page-1));
         $card = [
             'user'=>[
                 'title'=>'trick',
@@ -57,25 +57,10 @@ class HomeController extends AbstractController
             'content' => 'blabla bonjour',
             'image' => 'https://placehold.co/600x400'
         ];
-
-        // $dir = getcwd();
-        // chdir('../');
-        // $loader = new FilesystemLoader('templates');
-        // $twig = new Environment($loader);
-
-        // chdir($dir);
-
-        // echo $twig->render('home/_partial_tricklist.html.twig', [
-        //     'controller_name' => 'HomeController',
-        //     'card' => $card,
-        //     'tricks' => $tricks
-        // ]);
-
         return $this->render('home/_partial_tricklist.html.twig', [
             'controller_name' => 'HomeController',
             'card' => $card,
             'tricks' => $tricks
         ]);
     }
-
 }

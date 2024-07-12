@@ -49,7 +49,7 @@
 
 <div class="tag_container">
     <div class="tag"><!-- trick.createdAt -->{{ trick.createdAt.format('d/m/Y') }}</div>
-    <div class="tag"><!-- trick.lastModified -->18/01/2024</div>
+    <div class="tag"><!-- trick.lastModified -->{{ trick.lastmodified ? trick.lastmodified.format('d/m/Y') : trick.createdAt.format('d/m/Y') }}</div>
     <div class="tag"><!-- trick.group -->{{trick.groupe.name}}</div>
 </div>
 
@@ -74,26 +74,15 @@
     {% endif %}
     <div class="div_separator"></div>
 
-    <div class="comment_list_container">
-        {% for comment in trick.comments %}
-            <div class="comment flex">
-                <div class="comment_author">
-                    {{ comment.author.name }}
-                    {% if comment.author.avatar %}
-                        <img width="60" height="60" src='{{asset('img/' ~ comment.author.avatar)}}'></img>
-                    {% else %}
-                    <img width="60" height="60" src='{{asset('img/default_avatar.png')}}'></img>
-
-                    {% endif %}
-                </div>
-                <div>
-                    {{ comment.content }}
-                </div>
-                </div>
-        {% endfor %}
+    <div id="comments" class="comment_list_container">
+        {{ include('comment/_partial_commentlist.html.twig') }}
     </div>
-
+    {% if comments|length == 10 %}
+    <div id="pagination" class="btnPaginate" data-trick="{{ trick.id }}" data-page="2">
+      Charger plus
+    </div>
+    {% endif %}
     
 
-    <a style='margin:auto; display:block; text-align:center;' href="{{ path('app_trick_index') }}">back to list</a>
+    <a style='margin:auto; display:block; text-align:center;' href="{{ path('app_trick_index') }}">Retour à la liste</a>
 {% endblock %}

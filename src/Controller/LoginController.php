@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
@@ -42,6 +43,9 @@ class LoginController extends AbstractController
 
         $request = Request::createFromGlobals();
         $userEmail = $request->request->get('email', '');
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => $userEmail]);
+
 
         if($userEmail) {
 
@@ -57,18 +61,15 @@ class LoginController extends AbstractController
             // Set a "subject" 
             $email->subject('Nouveau mot de passe Snowtricks');
             // Set HTML "Body" 
-            $plaintextPassword = uniqid();
+            $plaintextPassword = bin2hex(random_bytes(5));
             $html = '<p>
-            Votre nouveau mot de passe temporaire est '.$plaintextPassword.'.
+            cliquez sur ce lien pour réinitialiser votre mot de passe '.$_ENV['SITE_URL'].'user/'.$user->getId().'/new_pw?pw='.$plaintextPassword.'.
             </p>';
 
             $email->html($html);
             // Send the message 
             $mailer->send($email);
 
-            $userRepository = $entityManager->getRepository(User::class);
-
-            $user = $userRepository->findOneBy(['email' => $userEmail]);
 
             $hashedPassword = $this->hasher->hashPassword(
                 $user,

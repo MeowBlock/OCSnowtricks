@@ -92,3 +92,20 @@ a.navbar-item.is-active {
     color: #485fc7!important;
 }
 }
+
+#pagination {
+  border: 1px solid white;
+  width: max-content;
+  background: var(--blue);
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin: auto;
+  margin-bottom: 60px;
+}
+
+.control, .control div {
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+}

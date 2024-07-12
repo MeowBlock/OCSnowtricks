@@ -17,6 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
+    public $itemsPerPage = 10;
+
     #[Route('/', name: 'app_comment_index', methods: ['GET'])]
     public function index(CommentRepository $commentRepository): Response
     {
@@ -44,7 +46,7 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_trick_show', ['id'=>$comment->getTrick()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_show', ['slug'=>$comment->getTrick()->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('comment/new.html.twig', [
@@ -88,5 +90,20 @@ class CommentController extends AbstractController
         }
 
         return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    
+    #[Route('/api/getComments', name: 'api_comment_index', methods: ['GET'])]
+    public function getComments(CommentRepository $CommentRepository): Response
+    {
+        $request = Request::createFromGlobals();
+        $page = $request->query->get('page', 1);
+        $trick = $request->query->get('trick', 1);
+
+        $comments = $CommentRepository->findBy(['trick' => $trick], ['id'=> 'DESC'], $this->itemsPerPage * $page,  $this->itemsPerPage * ($page-1));
+        return $this->render('comment/_partial_commentlist.html.twig', [
+            'controller_name' => 'CommentController',
+            'comments' => $comments
+        ]);
     }
 }

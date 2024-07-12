@@ -7,6 +7,7 @@ use App\Entity\Photo;
 use App\Form\UserType;
 use App\Security\EmailVerifier;
 use App\Repository\UserRepository;
+use Exception;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -138,19 +139,21 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $oldpassword = $this->getUser()->getPassword();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->isSubmitted() && $form->isValid()) {
                 $plaintextPassword = $user->getPassword();
     
                 // hash the password (based on the security.yaml config for the $user class)
-                $hashedPassword = $passwordHasher->hashPassword(
-                    $user,
-                    $plaintextPassword
-                );
-                $user->setPassword($hashedPassword);
+                $newuser = new User();
+                $newuser->setPassword($oldpassword);
+
+                if(!$passwordHasher->isPasswordValid($newuser, $plaintextPassword)) {
+                    throw new Exception('mauvais mot de passe');
+                }
+                $user->setPassword($oldpassword);
                 $user->setAvatar('default_avatar.png');
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -198,6 +201,41 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form,
             'button_label' => 'Modifier',
+            'edit' => 'true'
+        ]);
+    }
+
+
+    #[Route('/{id}/new_pw', name: 'app_user_new_pw', methods: ['GET', 'POST'])]
+    public function new_pw(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $r = Request::createFromGlobals();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plaintextPassword = $user->getPassword();
+    
+            // hash the password (based on the security.yaml config for the $user class)
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $plaintextPassword
+            );
+            $user->setPassword($hashedPassword);
+            $user->setAvatar('default_avatar.png');
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $entityManager->flush();
+
+
+            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/new_pw.html.twig', [
+            'user' => $user,
+            'form' => $form,
+            'old_pw' => $request->query->get('pw'),
             'edit' => 'true'
         ]);
     }

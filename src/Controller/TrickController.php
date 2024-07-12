@@ -10,6 +10,7 @@ use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\CommentType;
 use App\DataFixtures\TrickFixture;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -50,7 +51,6 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trick->setCreatedAt(new \DateTimeImmutable());
 
             // $videolinks = $form->get('videos')->getData();
             // if ($videolinks) {
@@ -123,6 +123,10 @@ class TrickController extends AbstractController
                     }
                 }
                 $entityManager->flush();
+                $this->addFlash(
+                    'success',
+                    'Nouveau trick enregistré'
+                );
             }
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
@@ -136,16 +140,18 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response
+    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET'])]
+    public function show(Trick $trick, CommentRepository $commentRepository): Response
     {
 
         $commentform = $this->createForm(CommentType::class);
         $commentform = $commentform->createView();
+        $comments = $commentRepository->findBy(['trick' => $trick], ['id'=> 'DESC'], 10);
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'commentform' => $commentform,
-
+            'comments' => $comments,
         ]);
     }
 

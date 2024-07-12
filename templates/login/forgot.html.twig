@@ -24,13 +24,15 @@
             <form action="{{ path('app_forgot') }}" method="post">
             <div class="field">
               <div class="control">
+                <label>Mon adresse email pour modifier mon mot de passe</label>
                 <input class="input is-medium is-rounded" type="email" placeholder="hello@example.com" autocomplete="email" name="email" required />
               </div>
             </div>
             <br />
             <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
-              Demander un nouveau mot de passe
+              Demander un changement de mot de passe par email
             </button>
+            <span style="color:dimgray">Vérifiez vos spams !</span>
           </form>
           <br>
           <nav class="level">

@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Trick{% endblock %}
+{% block title %}Nouveau trick{% endblock %}
 
-{% block stylesheets %} {{ parent() }} {% endblock %}
+{% block stylesheets %} 
+{{ parent() }}
+{{ encore_entry_link_tags('tricks') }}
+
+{% endblock %}
 
 {% block body %}
     <div class="form_supercontainer">
@@ -10,6 +14,6 @@
         <div class="form_container">
             {{ include('trick/_form.html.twig') }}
         </div>
-        <a href="{{ path('app_trick_index') }}">back to list</a>
+        <a href="{{ path('app_trick_index') }}">Retour à la liste</a>
     </div>
 {% endblock %}

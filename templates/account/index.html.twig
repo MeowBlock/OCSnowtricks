@@ -100,7 +100,7 @@
                                             <tr>
                                                 <td width="5%"><i class="fa fa-bell-o"></i></td>
                                                 <td>{{trick.name}}</td>
-                                                <td class="level-right"><a class="button is-small is-primary" href="{{path('app_trick_show', {id:trick.id})}}">Voir</a></td>
+                                                <td class="level-right"><a class="button is-small is-primary" href="{{path('app_trick_show', {slug:trick.slug})}}">Voir</a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

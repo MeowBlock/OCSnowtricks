@@ -1,6 +1,6 @@
 {% for trick in tricks %}
 <div v-for="card in cardData" key="card.id" class="column cardContainer is-4 sm-is-12">
-  <a style="text-decoration:none;" class="trickLink" href="{{ path('app_trick_show', {id: trick.id}) }}">
+  <a style="text-decoration:none;" class="trickLink" href="{{ path('app_trick_show', {slug: trick.slug}) }}">
     <div class="card large">
       <div class="card-image">
         <figure class="image is-16by9">

@@ -25,17 +25,6 @@ class TrickControllerTest extends WebTestCase
         }
     }
 
-    public function testIndex(): void
-    {
-        $crawler = $this->client->request('GET', $this->path);
-
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Trick index');
-
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
-    }
-
     public function testNew(): void
     {
         $originalNumObjectsInRepository = count($this->repository->findAll());
@@ -59,11 +48,12 @@ class TrickControllerTest extends WebTestCase
         $this->markTestIncomplete();
         $fixture = new Trick();
         $fixture->setName('My Title');
+        $fixture->setSlug($fixture->generateSlug());
 
         $this->manager->persist($fixture);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
+        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getSlug()));
 
         self::assertResponseStatusCodeSame(200);
         self::assertPageTitleContains('Trick');

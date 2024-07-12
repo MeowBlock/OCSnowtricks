@@ -1,0 +1,16 @@
+{% for comment in comments %}
+<div class="comment flex">
+    <div class="comment_author">
+        {{ comment.author.name }}
+        {% if comment.author.avatar %}
+            <img width="60" height="60" src='{{asset('img/' ~ comment.author.avatar)}}'></img>
+        {% else %}
+        <img width="60" height="60" src='{{asset('img/default_avatar.png')}}'></img>
+
+        {% endif %}
+    </div>
+    <div>
+        {{ comment.content }}
+    </div>
+    </div>
+{% endfor %}

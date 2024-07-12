@@ -1,15 +1,31 @@
 {{ form_start(form) }}
-{{ form_row(form.name) }}
-{{ form_row(form.content) }}
-{{ form_row(form.photos) }}
-{{ form_row(form.groupe) }}
+<div class="field">
+  <div class="control">
+      {{ form_row(form.name) }}
+  </div>
+</div>
+<div class="field">
+  <div class="control">
+      {{ form_row(form.content) }}
+  </div>
+</div>
+<div class="field">
+  <div class="control">
+      {{ form_row(form.photos) }}
+  </div>
+</div>
+<div class="field">
+  <div class="control">
+      {{ form_row(form.groupe) }}
+  </div>
+</div>
 <label> Videos : </label>
 <ul class="videos"
     data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}"
     data-prototype="{{ form_widget(form.videos.vars.prototype.url)|e('html_attr') }}"
     ></ul>
     <button type="button" class="add_item_link" data-collection-holder-class="videos">Ajouter une vidéo (url)</button>
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn">{{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}
 
 

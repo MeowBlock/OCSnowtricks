@@ -62,7 +62,6 @@ class TrickFixture extends Fixture implements DependentFixtureInterface
                 $trick->setGroupe($gRepo->findOneBy(['name' => $groupe]));
                 $trick->setName($trickName);
                 $trick->setContent($fc->generateLorem());
-                $trick->setCreatedAt(new \DateTimeImmutable());
 
                 $manager->persist($photo);
                 $manager->persist($trick);

@@ -46,9 +46,5 @@ class VideoValidator extends ConstraintValidator
                     ->addViolation();
             }
         }
-
-
-
-
     }
 }

@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Slug;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
+use Gedmo\Mapping\Annotation\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -16,7 +20,7 @@ class Trick
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -29,9 +33,12 @@ class Trick
     private Collection $videos;
 
     #[ORM\Column]
+    #[Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Timestampable]
+
     private ?\DateTimeImmutable $lastModified = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
@@ -39,6 +46,10 @@ class Trick
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?Groupe $groupe = null;
+
+    #[ORM\Column(length: 255, unique: true)]
+    #[Slug(fields:['name'])]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -208,5 +219,31 @@ class Trick
         $this->groupe = $groupe;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function generateSlug() {
+        if($this->getName()) {
+            return strtolower(str_replace(' ', '-', $this->getName()));
+        }
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addConstraint(new UniqueEntity([
+            'fields' => ['name'],
+            'message' => 'Ce trick existe déjà',
+        ]));
     }
 }

@@ -28,6 +28,6 @@ async function getTricks(){
 
     const response = await fetch('/api/getTricks/?page='+pagesBtn.dataset.page);
     content = await response.text();
-    document.querySelector('#app').innerHTML = content;
+    document.querySelector('#app').innerHTML += content;
     increasePagination();
 }
