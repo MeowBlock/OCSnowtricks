@@ -1,10 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Trick{% endblock %}
-
+{% block title %}Editer Trick{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+{% block javascripts %}
+  {{parent()}}
+  {{ encore_entry_link_tags('login') }}
+{% endblock %}
 {% block body %}
     <div class="form_supercontainer">
-        <h1>Edit Trick</h1>
+        <h1>Editer Trick</h1>
         <div class="form_container">
             {{ include('trick/_form.html.twig', {'button_label': 'Mettre a jour'}) }}
         </div>

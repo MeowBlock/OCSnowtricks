@@ -28,7 +28,7 @@ class TrickType extends AbstractType
         $builder
             ->add('name', TextType::class, array('label' => 'Nom : '))
             ->add('content', TextareaType::class, array('label' => 'Description : '))
-            ->add('photos', FileType::class, array('label' => 'Images : ', 'multiple' => true, 'mapped'=> false))
+            ->add('photos', FileType::class, array('label' => 'Images : ', 'multiple' => true, 'mapped'=> false, 'required' => false))
             ->add('videos', CollectionType::class, array('entry_type' => VideoType::class, 'label' => false,'allow_add' => true,'allow_delete' => true, 'by_reference' => false,))
             ->add('groupe', ChoiceType::class, array('label' => 'Groupe : ', 'mapped'=> true, 'choices' => $choices, 'choice_label'=>'name'))
         ;

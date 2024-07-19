@@ -4,8 +4,10 @@
 
 {% block stylesheets %} 
 {{ parent() }}
-{{ encore_entry_link_tags('tricks') }}
-
+{% endblock %}
+{% block javascripts %}
+  {{parent()}}
+  {{ encore_entry_link_tags('login') }}
 {% endblock %}
 
 {% block body %}

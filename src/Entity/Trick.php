@@ -9,10 +9,12 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Ce trick existe déjà')]
 class Trick
 {
     #[ORM\Id]
@@ -21,7 +23,12 @@ class Trick
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    private ?string $name = null;
+    #[Length(
+        min: 2,
+        max: 255,
+        minMessage: 'Le nom est trop court, il doit faire au moins {{ limit }} caractère de long',
+        maxMessage: 'Le nom est trop long, il ne peut pas faire plus de {{ limit }} caractères de long',
+    )]    private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $Content = null;
@@ -38,7 +45,6 @@ class Trick
 
     #[ORM\Column(nullable: true)]
     #[Timestampable]
-
     private ?\DateTimeImmutable $lastModified = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
@@ -237,13 +243,5 @@ class Trick
         $this->slug = $slug;
 
         return $this;
-    }
-
-    public static function loadValidatorMetadata(ClassMetadata $metadata): void
-    {
-        $metadata->addConstraint(new UniqueEntity([
-            'fields' => ['name'],
-            'message' => 'Ce trick existe déjà',
-        ]));
     }
 }

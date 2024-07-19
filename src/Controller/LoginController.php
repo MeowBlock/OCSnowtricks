@@ -63,7 +63,7 @@ class LoginController extends AbstractController
             // Set HTML "Body" 
             $plaintextPassword = bin2hex(random_bytes(5));
             $html = '<p>
-            cliquez sur ce lien pour réinitialiser votre mot de passe '.$_ENV['SITE_URL'].'user/'.$user->getId().'/new_pw?pw='.$plaintextPassword.'.
+            cliquez sur ce lien pour réinitialiser votre mot de passe <a href="'.$_ENV['SITE_URL'].'user/'.$user->getId().'/new_pw?pw='.$plaintextPassword.'">'.$_ENV['SITE_URL'].'user/'.$user->getId().'/new_pw?pw='.$plaintextPassword.'</a>.
             </p>';
 
             $email->html($html);

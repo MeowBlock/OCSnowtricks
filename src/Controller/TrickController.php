@@ -155,20 +155,64 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
+        $oldPhotos = $trick->getPhotos();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photosFiles = $form->get('photos')->getData();
+            foreach($oldPhotos as $photo) {
+                $trick->addPhoto($photo);
+            }
+            if ($photosFiles) {
+                $filesystem = new Filesystem();
+                $dir = __DIR__.'/../../public/img/trick/'.$trick->getId();
+                try {
+                    $filesystem->mkdir(
+                        $dir, 0700
+                    );
+                } catch (IOExceptionInterface $exception) {
+                    echo "An error occurred while creating your directory at ".$exception->getPath();
+                }
+
+
+                foreach ($photosFiles as $photo) { 
+                    $filename = uniqid().'.'.$photo->guessExtension();
+                    try {
+                        $photo->move(
+                            $dir,
+                            $filename
+                        );
+
+
+                        $img = new Photo();
+                        $img->setUrl($filename);
+                        $img->setTrick($trick);
+
+                        $entityManager->persist($img);
+
+                        $trick->addPhoto($img);
+                    } catch (FileException $e) {
+                        echo 'Erreur dans l\'envoi de l\'image';
+                    }
+                }
+            }
+
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Trick modifié'
+            );
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
+            'photos' => $oldPhotos,
         ]);
     }
 
@@ -182,4 +226,15 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/api/deletePhoto/{id}', name: 'app_photo_delete', methods: ['GET'])]
+    public function deletephoto(Request $request, Photo $photo, EntityManagerInterface $entityManager): Bool
+    {
+        $entityManager->remove($photo);
+        $entityManager->flush();
+
+        return true;
+
+    }
+
 }

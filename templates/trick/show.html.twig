@@ -19,7 +19,7 @@
         {{ trick.name}} 
         <div class="banner_buttons">
             {% if app.user %}
-                <a style="width:60px;" href="{{ path('app_trick_edit', {'id': trick.id}) }}"><img width="30" height="30" src="{{asset('img/pen.png')}}"></a>
+                <a style="width:60px;" href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><img width="30" height="30" src="{{asset('img/pen.png')}}"></a>
                 {{ include('trick/_delete_form.html.twig') }}
             {% endif %}
 

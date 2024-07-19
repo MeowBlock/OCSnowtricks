@@ -33,7 +33,18 @@ class CommentFixture extends Fixture implements DependentFixtureInterface
         $tRepo = $manager->getRepository(Trick::class);
         $allTricks = $tRepo->findAll();
         $allUsers = $uRepo->findAll();
+        $k = 0;
         foreach($allTricks as $trick) {
+            if($k++ == 0) {
+                for($i=0;$i<25;$i++) {
+                    $numba = random_int(0, count($allUsers) - 1);
+                    $comment = new Comment();
+                    $comment->setAuthor($allUsers[$numba]);
+                    $comment->setTrick($trick);
+                    $comment->setContent($fc->generateLorem(random_int(1, 20)));
+                    $manager->persist($comment);
+                }
+            }
             if(random_int(0, 10) < 8) {
                 continue;
             }
